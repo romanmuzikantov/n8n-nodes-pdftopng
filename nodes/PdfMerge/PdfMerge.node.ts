@@ -3,6 +3,8 @@ import {
 	INodeExecutionData,
 	INodeProperties,
 	INodeType,
+	IBinaryKeyData,
+	IBinaryData,
 	INodeTypeDescription,
 	IPairedItemData,
 	NodeOperationError,
@@ -56,6 +58,10 @@ export class PdfMerge implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items1 = this.getInputData(0);
 		const items2 = this.getInputData(1);
+		let itemBinaryData1: IBinaryKeyData;
+		let itemBinaryData2: IBinaryKeyData;
+		let docBinaryDataF: IBinaryData;
+		let docBinaryDataS: IBinaryData;
 
 		if (items1.length !== items2.length) {
 			throw new NodeOperationError(
@@ -74,39 +80,42 @@ export class PdfMerge implements INodeType {
 			const item2 = items2[itemIndex];
 
 			try {
-				const binaryData1 = this.helpers.assertBinaryData(itemIndex, dataPropertyName1);
-				const binaryData2 = this.helpers.assertBinaryData(itemIndex, dataPropertyName2);
-				if (!isPDFDocument(binaryData1)) {
+				itemBinaryData1 = items1[itemIndex].binary as IBinaryKeyData;
+				itemBinaryData2 = items2[itemIndex].binary as IBinaryKeyData;
+				docBinaryDataF = itemBinaryData1[dataPropertyName1] as IBinaryData;
+				docBinaryDataS = itemBinaryData2[dataPropertyName2] as IBinaryData;
+
+				if (!isPDFDocument(docBinaryDataF)) {
 					// Sanity check: only allow PDFs
 					throw new NodeOperationError(
 						this.getNode(),
-						`Input 1 (on binary property "${dataPropertyName2}") should be a PDF file, was ${binaryData2.mimeType} instead`,
+						`Input 1 (on binary property "${dataPropertyName1}") should be a PDF file, was ${docBinaryDataF.mimeType} instead`,
 						{ itemIndex },
 					);
 				}
-				if (!isPDFDocument(binaryData2)) {
+				if (!isPDFDocument(docBinaryDataS)) {
 					// Sanity check: only allow PDFs
 					throw new NodeOperationError(
 						this.getNode(),
-						`Input 2 (on binary property "${dataPropertyName2}") should be a PDF file, was ${binaryData2.mimeType} instead`,
+						`Input 2 (on binary property "${dataPropertyName2}") should be a PDF file, was ${docBinaryDataS.mimeType} instead`,
 						{ itemIndex },
 					);
 				}
 				let fileContent1: Buffer;
-				if (binaryData1.id) {
+				if (docBinaryDataF.id) {
 					fileContent1 = await this.helpers.binaryToBuffer(
-						this.helpers.getBinaryStream(binaryData1.id),
+						this.helpers.getBinaryStream(docBinaryDataF.id),
 					);
 				} else {
-					fileContent1 = Buffer.from(binaryData1.data, BINARY_ENCODING);
+					fileContent1 = Buffer.from(docBinaryDataF.data, BINARY_ENCODING);
 				}
 				let fileContent2: Buffer;
-				if (binaryData2.id) {
+				if (docBinaryDataS.id) {
 					fileContent2 = await this.helpers.binaryToBuffer(
-						this.helpers.getBinaryStream(binaryData2.id),
+						this.helpers.getBinaryStream(docBinaryDataS.id),
 					);
 				} else {
-					fileContent2 = Buffer.from(binaryData2.data, BINARY_ENCODING);
+					fileContent2 = Buffer.from(docBinaryDataS.data, BINARY_ENCODING);
 				}
 
 				const merged = await mergePdfs(fileContent1, fileContent2);
