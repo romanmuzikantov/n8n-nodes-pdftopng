@@ -1,3 +1,3 @@
-# n8n-nodes-pdfmerge-fixed
+# n8n-nodes-pdftopng
 
-Quickfix for [jreyesr's](https://github.com/jreyesr/n8n-nodes-carbonejs) carbonjs nodes in which the merge PDF node was not working as expected anymore.
+n8n node made to convert a PDF file to a PNG image.

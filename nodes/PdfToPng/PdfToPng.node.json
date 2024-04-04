@@ -1,12 +1,12 @@
 {
-	"node": "n8n-nodes-carbonejs.pdfMerge",
+	"node": "n8n-nodes-pdftopng.pdfToPng",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Development", "Developer Tools"],
 	"resources": {
 		"primaryDocumentation": [
 			{
-				"url": "https://pdf-lib.js.org/"
+				"url": "https://www.npmjs.com/package/pdf-to-png-converter"
 			}
 		]
 	}

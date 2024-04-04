@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-pdfmerge-fixed",
+  "name": "n8n-nodes-pdftopng",
   "version": "1.0.0",
-  "description": "Fixed PdfMerge node from jreyesr's carbonjs nodes.",
+  "description": "n8n node made to convert a PDF file to a PNG image.",
   "keywords": [
     "n8n-community-node-package"
   ],
-  "license": "SEE LICENSE IN LICENSE_CARBONE.md AND SEE LICENSE IN LICENSE_N8N.md",
-  "homepage": "https://github.com/jreyesr/n8n-nodes-carbonejs",
+  "license": "",
+  "homepage": "https://github.com/romanmuzikantov/n8n-nodes-pdftopng",
   "author": {
-    "name": "jreyesr",
-    "url": "https://github.com/jreyesr"
+    "name": "Roman Muzikantov",
+    "url": "https://github.com/romanmuzikantov"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/romanmuzikantov/n8n-nodes-carbonejs"
+    "url": "https://github.com/romanmuzikantov/n8n-nodes-pdftopng"
   },
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "nodes": [
-      "dist/nodes/PdfMerge/PdfMerge.node.js"
+      "dist/nodes/PdfToPng/PdfToPng.node.js"
     ]
   },
   "devDependencies": {
@@ -42,10 +42,11 @@
     "gulp": "^4.0.2",
     "n8n-core": "*",
     "n8n-workflow": "*",
+    "pdf-to-png-converter": "^3.2.0",
     "prettier": "^2.7.1",
     "typescript": "~4.8.4"
   },
   "dependencies": {
-    "pdf-lib": "^1.17.1"
+    "canvas": "^2.11.2"
   }
 }
