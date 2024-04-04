@@ -28,6 +28,14 @@ const nodeOperationOptions: INodeProperties[] = [
 		default: 'data',
 		description: 'Name of the binary property where the converted document will be output',
 	},
+	{
+		displayName: 'Viewport Scale',
+		name: 'viewportScale',
+		type: 'number',
+		default: 1,
+		description:
+			'Desired viewportscale of the output PNG image',
+	},
 ];
 
 export class PdfToPng implements INodeType {
@@ -57,6 +65,7 @@ export class PdfToPng implements INodeType {
 		for (let itemIndex = 0; itemIndex < items1.length; itemIndex++) {
 			const dataPropertyName1 = this.getNodeParameter('dataPropertyName1', itemIndex) as string;
 			const dataPropertyNameOut = this.getNodeParameter('dataPropertyNameOut', itemIndex) as string;
+			const viewportScale = this.getNodeParameter('viewportScale', itemIndex) as number;
 			const item1 = items1[itemIndex];
 
 			try {
@@ -82,7 +91,7 @@ export class PdfToPng implements INodeType {
 					fileContent1 = Buffer.from(docBinaryData.data, BINARY_ENCODING);
 				}
 
-				const pngPagesOutput = await convertPdfToPng(fileContent1);
+				const pngPagesOutput = await convertPdfToPng(fileContent1, viewportScale);
 
 				let binaryDataOutput = await Promise.all(pngPagesOutput.map((value, index, arr) => {
 					return this.helpers.prepareBinaryData(
