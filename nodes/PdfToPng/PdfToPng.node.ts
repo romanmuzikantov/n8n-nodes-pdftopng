@@ -19,7 +19,7 @@ const nodeOperationOptions: INodeProperties[] = [
 		type: 'string',
 		default: 'data',
 		description:
-			'Name of the binary property passed as input.',
+			'Name of the binary property passed as input',
 	},
 	{
 		displayName: 'Property Name Out',

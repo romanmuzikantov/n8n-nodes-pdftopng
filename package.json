@@ -42,11 +42,11 @@
     "gulp": "^4.0.2",
     "n8n-core": "*",
     "n8n-workflow": "*",
-    "pdf-to-png-converter": "^3.2.0",
     "prettier": "^2.7.1",
     "typescript": "~4.8.4"
   },
   "dependencies": {
-    "canvas": "^2.11.2"
+    "canvas": "^2.11.2",
+    "pdf-to-png-converter": "^3.2.0"
   }
 }
